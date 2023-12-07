@@ -1,8 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:norandy_app/pages/home_page.dart';
 import 'pages/signin.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import './firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -21,40 +28,25 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}):super(key: key);
-
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
-
-    return  Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const Center(
-          child: Text("Welcome to Norandy's Mall", style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold, color: Colors.amber),),  
-          ),
-            ElevatedButton(
-              style:const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return const SignInPage();
-                    }),
-                  );
-                },
-                child: const Text("Get Started", style: TextStyle(color: Colors.black),),
-              ),
-        ],
-      )
-    );
+    return Scaffold(
+        backgroundColor: Colors.black,
+        body: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const MainHomePage();
+              } else {
+                return const SignInPage();
+              }
+            }));
   }
 }

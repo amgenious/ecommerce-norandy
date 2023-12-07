@@ -11,6 +11,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: ListView(
@@ -26,36 +27,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const Text("Sign Up", textAlign: TextAlign.center, style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold, color: Colors.amberAccent),),
-          const SizedBox(height: 20,),
-          SizedBox(
-                width: 350,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Full Name",
-                      style: TextStyle(fontSize: 16 ,color: Colors.amberAccent),
-                    ),
-                    const SizedBox(
-                      height: 13,
-                    ),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: Colors.amberAccent, width: 1.0, style: BorderStyle.solid)
-                        ),
-                        hintText: 'Full Name',
-                        hintStyle: TextStyle(color: Colors.amberAccent)
-                      ),
-                    ),
-                  ],
-                )),
             const SizedBox(
               height: 25,
             ),
             SizedBox(
-                width: 350,
+                width: size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -82,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 25,
             ),
             SizedBox(
-                width: 350,
+                width: size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -94,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 13,
                     ),
                     TextFormField(
+                      obscureText: true,
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -109,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 30,
             ),
             SizedBox(
-              width: 350,
+              width: size.width,
               height: 50,
               child: ElevatedButton(
                 style:const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amberAccent)),
