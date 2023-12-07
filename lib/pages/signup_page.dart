@@ -1,18 +1,17 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:norandy_app/main.dart';
-import 'package:norandy_app/pages/forget_password_page.dart';
-import 'package:norandy_app/pages/signup_page.dart';
+import 'package:norandy_app/pages/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:email_validator/email_validator.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _MyWidgetState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _MyWidgetState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   final formKey = GlobalKey<FormState>();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
@@ -28,7 +27,6 @@ class _MyWidgetState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: Form(
@@ -46,7 +44,7 @@ class _MyWidgetState extends State<SignInPage> {
               ),
             ),
             const Text(
-              "Sign In",
+              "Sign Up",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 30,
@@ -54,7 +52,7 @@ class _MyWidgetState extends State<SignInPage> {
                   color: Colors.amberAccent),
             ),
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             SizedBox(
                 width: size.width,
@@ -69,22 +67,20 @@ class _MyWidgetState extends State<SignInPage> {
                       height: 13,
                     ),
                     TextFormField(
+                      style: const TextStyle(color: Colors.amberAccent),
                       textInputAction: TextInputAction.next,
                       controller: emailcontroller,
-                      style: const TextStyle(color: Colors.amberAccent),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
                           email != null && EmailValidator.validate(email)
                               ? "Enter valid email"
                               : null,
                       decoration: const InputDecoration(
-                          filled: true,
-                          fillColor: Color.fromARGB(255, 0, 0, 0),
                           enabledBorder: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
-                                  color: Colors.amber,
+                                  color: Colors.amberAccent,
                                   width: 1.0,
                                   style: BorderStyle.solid)),
                           hintText: 'Email',
@@ -93,7 +89,7 @@ class _MyWidgetState extends State<SignInPage> {
                   ],
                 )),
             const SizedBox(
-              height: 40,
+              height: 25,
             ),
             SizedBox(
                 width: size.width,
@@ -108,10 +104,10 @@ class _MyWidgetState extends State<SignInPage> {
                       height: 13,
                     ),
                     TextFormField(
+                      style: const TextStyle(color: Colors.amberAccent),
                       textInputAction: TextInputAction.done,
                       controller: passwordcontroller,
                       obscureText: true,
-                      style: const TextStyle(color: Colors.amberAccent),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) => value != null && value.length < 5
                           ? "Enter min. 5 characters"
@@ -140,59 +136,42 @@ class _MyWidgetState extends State<SignInPage> {
                       backgroundColor:
                           MaterialStatePropertyAll(Colors.amberAccent)),
                   onPressed: () {
-                    signIn();
+                    signUp();
                   },
                   child: const Text(
-                    "Sign In",
+                    "Sign Up",
                     style: TextStyle(fontSize: 20),
                   )),
             ),
             const SizedBox(
-              height: 100,
+              height: 50,
             ),
-            SizedBox(
-              width: size.width,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return const ForgetPassword();
-                        }),
-                      );
-                    },
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 150,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
-                          return const SignUpPage();
-                        }),
-                      );
-                    },
-                    child: const Text(
-                      "Sign Up",
-                      style: TextStyle(fontSize: 16, color: Colors.white),
-                    ),
-                  ),
-                ],
+            Row(children: [
+              const Text(
+                "Already have account, ",
+                style: TextStyle(color: Colors.amber),
               ),
-            )
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return const SignInPage();
+                    }),
+                  );
+                },
+                child: const Text(
+                  "Click here",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ])
           ],
         ),
       ),
     );
   }
 
-  Future signIn() async {
+  Future signUp() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) return;
     showDialog(
@@ -202,7 +181,7 @@ class _MyWidgetState extends State<SignInPage> {
               child: CircularProgressIndicator(),
             ));
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailcontroller.text.trim(),
         password: passwordcontroller.text.trim(),
       );
@@ -211,8 +190,11 @@ class _MyWidgetState extends State<SignInPage> {
       print(error);
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error.message.toString()),
+         SnackBar(
+          content: Text(
+            error.message.toString(),
+            style:const  TextStyle(color: Colors.red),
+          ),
         ),
       );
     }

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:norandy_app/pages/home_page.dart';
+import 'package:norandy_app/utils/wrapper.dart';
 import 'pages/signin.dart';
 import 'package:flutter/services.dart';
 
@@ -13,6 +13,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -20,9 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    return const MaterialApp(
+    return  MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -43,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const MainHomePage();
+                return const Wrapper();
               } else {
                 return const SignInPage();
               }
