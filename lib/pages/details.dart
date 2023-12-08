@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:norandy_app/pages/cart.dart';
 import 'package:norandy_app/utils/colors.dart';
 import 'package:norandy_app/widget/add_to_cart.dart';
 
@@ -32,6 +33,17 @@ class _DetailsPageState extends State<DetailsPage> {
           title: const Text(
             "Details",
           ),
+          actions: [
+            IconButton(
+              onPressed:() {
+                Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return const CartPage();
+                        }),
+                      );
+              },
+             icon:const Icon(Icons.shopping_cart) )
+          ],
         ),
         body: SizedBox(
           width: size.width,

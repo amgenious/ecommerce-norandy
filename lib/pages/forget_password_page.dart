@@ -23,6 +23,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       body: ListView(
@@ -40,14 +41,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           const Text(
             "Forget Password",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Colors.amber),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,color: Color.fromARGB(255, 255, 179, 64)),
           ),
           const SizedBox(
             height: 20,
           ),
           const Text("Please enter your email below to receive reset password email", style: TextStyle(color: Colors.amber),),
           SizedBox(
-                width: 350,
+                width: size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -57,7 +58,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       TextFormField(
                       textInputAction: TextInputAction.next,
                       controller: emailcontroller,
-                      style: const TextStyle(color: Colors.amberAccent),
+                      style: const TextStyle(color: Color.fromARGB(255, 255, 179, 64)),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (email) =>
                           email != null && EmailValidator.validate(email)
@@ -70,7 +71,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(
-                                  color: Colors.amber,
+                                  color: Color.fromARGB(255, 255, 179, 64),
                                   width: 1.0,
                                   style: BorderStyle.solid)),
                           hintText: 'Email',
@@ -83,7 +84,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               child: ElevatedButton(
                                   style: const ButtonStyle(
                       backgroundColor:
-                          MaterialStatePropertyAll(Colors.amberAccent)),
+                          MaterialStatePropertyAll(Color.fromARGB(255, 255, 179, 64))),
                   onPressed: () {resetPassword();},
                   child: const Text("Get Email", style: TextStyle(fontSize: 20,color: Colors.black),)),
             ),

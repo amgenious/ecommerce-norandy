@@ -3,7 +3,7 @@ import 'package:norandy_app/main.dart';
 import 'package:norandy_app/pages/forget_password_page.dart';
 import 'package:norandy_app/pages/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:email_validator/email_validator.dart';
+// import 'package:email_validator/email_validator.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
