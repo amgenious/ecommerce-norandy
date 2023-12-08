@@ -73,10 +73,10 @@ class _MyWidgetState extends State<SignInPage> {
                       controller: emailcontroller,
                       style: const TextStyle(color: Colors.amberAccent),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (email) =>
-                          email != null && EmailValidator.validate(email)
-                              ? "Enter valid email"
-                              : null,
+                      // validator: (email) =>
+                      //     email != null && EmailValidator.validate(email)
+                      //         ? "Enter valid email"
+                      //         : null,
                       decoration: const InputDecoration(
                           filled: true,
                           fillColor: Color.fromARGB(255, 0, 0, 0),

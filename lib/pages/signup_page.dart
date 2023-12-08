@@ -71,10 +71,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       textInputAction: TextInputAction.next,
                       controller: emailcontroller,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (email) =>
-                          email != null && EmailValidator.validate(email)
-                              ? "Enter valid email"
-                              : null,
+                      // validator: (email) =>
+                      //     email != null && EmailValidator.validate(email)
+                      //         ? "Enter valid email"
+                      //         : null,
                       decoration: const InputDecoration(
                           enabledBorder: OutlineInputBorder(
                               borderRadius:
